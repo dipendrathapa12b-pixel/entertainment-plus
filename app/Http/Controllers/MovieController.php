@@ -160,26 +160,48 @@ public function show(string $type, int $id, TMDbService $tmdb)
             abort(404, 'Movie or TV details could not be loaded.');
         }
     }
+/**
+ * Show TV seasons and episodes.
+ */
+public function tvEpisodes(int $id, TMDbService $tmdb)
+{
+    try {
+        $tv = $tmdb->tvDetails($id);
 
-    /**
-     * Show TV seasons and episodes.
-     */
-    public function tvEpisodes(int $id, TMDbService $tmdb)
-    {
-        try {
-            $tv = $tmdb->tvDetails($id);
+        $seasons = $tv['seasons'] ?? [];
 
-            return view('movies.episodes', [
-                'tv' => $tv,
-                'seasons' => $tv['seasons'] ?? [],
-            ]);
+        foreach ($seasons as &$season) {
+            $seasonNumber = (int) ($season['season_number'] ?? -1);
 
-        } catch (\Throwable $e) {
-            Log::error('TV episodes error: ' . $e->getMessage());
+            if ($seasonNumber < 0) {
+                $season['episodes'] = [];
+                continue;
+            }
 
-            abort(404, 'TV episodes could not be loaded.');
+            try {
+                $seasonDetails = $tmdb->tvSeason($id, $seasonNumber);
+
+                $season['episodes'] = $seasonDetails['episodes'] ?? [];
+            } catch (\Throwable $e) {
+                Log::warning("TMDb season {$seasonNumber} error: " . $e->getMessage());
+
+                $season['episodes'] = [];
+            }
         }
+
+        unset($season);
+
+        return view('movies.episodes', [
+            'tv' => $tv,
+            'seasons' => $seasons,
+        ]);
+
+    } catch (\Throwable $e) {
+        Log::error('TV episodes error: ' . $e->getMessage());
+
+        abort(404, 'TV episodes could not be loaded.');
     }
+}
 
     /**
      * Show a selected TV season and episode list.
