@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,31 +7,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-   {{-- SEO TITLE --}}
-<title>@yield('title', 'ENTERTAINMENT+ | Anime, Movies & TV Shows')</title>
+    {{-- SEO TITLE --}}
+    <title>@yield('title', 'ENTERTAINMENT+ | Anime, Movies & TV Shows')</title>
 
-{{-- SEO DESCRIPTION --}}
-<meta name="description" content="@yield('description', 'Discover anime, movies and TV shows on ENTERTAINMENT+.')">
+    {{-- SEO DESCRIPTION --}}
+    <meta name="description" content="@yield('description', 'Discover anime, movies and TV shows on ENTERTAINMENT+.')">
 
-{{-- ROBOTS --}}
-<meta name="robots" content="index, follow, max-image-preview:large">
+    {{-- ROBOTS --}}
+    <meta name="robots" content="index, follow, max-image-preview:large">
 
-{{-- CANONICAL URL --}}
-<link rel="canonical" href="{{ url()->current() }}">
+    {{-- CANONICAL URL --}}
+    <link rel="canonical" href="{{ url()->current() }}">
 
-{{-- OPEN GRAPH --}}
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="ENTERTAINMENT+">
-<meta property="og:title" content="@yield('title', 'ENTERTAINMENT+ | Anime, Movies & TV Shows')">
-<meta property="og:description" content="@yield('description', 'Discover anime, movies and TV shows on ENTERTAINMENT+.')">
-<meta property="og:url" content="{{ url()->current() }}">
-<meta property="og:image" content="@yield('og_image', asset('images/entertainment-cover.jpg'))">
+    {{-- OPEN GRAPH --}}
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ENTERTAINMENT+">
+    <meta property="og:title" content="@yield('title', 'ENTERTAINMENT+ | Anime, Movies & TV Shows')">
+    <meta property="og:description" content="@yield('description', 'Discover anime, movies and TV shows on ENTERTAINMENT+.')">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="@yield('og_image', asset('images/entertainment-cover.jpg'))">
 
-{{-- TWITTER --}}
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="@yield('title', 'ENTERTAINMENT+')">
-<meta name="twitter:description" content="@yield('description', 'Discover anime, movies and TV shows.')">
-<meta name="twitter:image" content="@yield('og_image', asset('images/entertainment-cover.jpg'))">
+    {{-- TWITTER --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', 'ENTERTAINMENT+')">
+    <meta name="twitter:description" content="@yield('description', 'Discover anime, movies and TV shows.')">
+    <meta name="twitter:image" content="@yield('og_image', asset('images/entertainment-cover.jpg'))">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -51,5 +50,26 @@
 
     @stack('scripts')
 
+
+    <script>
+        document.addEventListener('click', function monetagFirstClick() {
+            if (sessionStorage.getItem('monetag_opened')) {
+                return;
+            }
+
+            sessionStorage.setItem('monetag_opened', 'yes');
+
+            window.open(
+                'https://uplcm.com/4/12229727',
+                '_blank'
+            );
+
+        }, {
+            once: true
+        });
+    </script>
+
+
 </body>
+
 </html>
